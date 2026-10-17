@@ -1,0 +1,6 @@
+{
+  "name": "Maa Ki Rasoi - Kota's Homemade Food Cloud Kitchen",
+  "description": "Hand-crafted vegetarian homemade food cloud kitchen in Borkhera, Kota, Rajasthan. Daily tiffins, fresh thalis, phulkas, and authentic ghar ka khana.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

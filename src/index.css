@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Manrope", system-ui, -apple-system, sans-serif;
+  --font-hindi: "Tiro Devanagari Hindi", serif;
+
+  --color-paper: #F5EEE2;
+  --color-paper-light: #FAF5ED;
+  --color-paper-card: #ECE3D5;
+  --color-ink: #1E1410;
+  --color-ink-deep: #160E0B;
+  --color-ink-soft: #2E201B;
+  --color-turmeric: #C48A1F;
+  --color-turmeric-light: #D9A038;
+  --color-terracotta: #A8442A;
+  --color-terracotta-dark: #8F3720;
+  --color-cardamom: #3C4A3A;
+  --color-cardamom-deep: #252F23;
+  --color-hairline: rgba(30, 20, 16, 0.12);
+  --color-hairline-dark: rgba(245, 238, 226, 0.12);
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+  width: 100%;
+}
+
+html {
+  font-family: var(--font-body);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  scroll-behavior: auto; /* Handled smoothly by Lenis when active */
+}
+
+#root {
+  max-width: 100%;
+  width: 100%;
+  /* No overflow, transform or filter here to preserve sticky and backdrop-filter */
+}
+
+/* Ensure GSAP ScrollTrigger pinned spacers never exceed viewport width */
+.pin-spacer {
+  max-width: 100% !important;
+  overflow-x: clip !important;
+  width: 100% !important;
+}
+
+/* Glass blur sticky header with 24px threshold and @supports fallback */
+.sticky-header {
+  background-color: transparent;
+  border-bottom: 1px solid transparent;
+  box-shadow: none;
+  transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              backdrop-filter 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              -webkit-backdrop-filter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sticky-header.is-scrolled {
+  /* Fallback near-opaque cream background when backdrop-filter is unsupported */
+  background-color: rgba(245, 238, 226, 0.95);
+  border-bottom: 1px solid rgba(30, 20, 16, 0.08);
+  box-shadow: 0 4px 20px -2px rgba(30, 20, 16, 0.06);
+}
+
+@supports ((-webkit-backdrop-filter: blur(14px)) or (backdrop-filter: blur(14px))) {
+  .sticky-header.is-scrolled {
+    background-color: rgba(245, 238, 226, 0.62);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
+  }
+}
+
+/* Authentic Paper Grain texture at 4% to 6% opacity */
+.paper-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.055'/%3E%3C/svg%3E");
+}
+
+/* Arch mask like an Indian home jharokha / boutique window */
+.mask-arch {
+  border-top-left-radius: 140px;
+  border-top-right-radius: 140px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+.mask-arch-sm {
+  border-top-left-radius: 80px;
+  border-top-right-radius: 80px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+/* Subtle hairline rules */
+.hairline-b {
+  border-bottom: 1px solid var(--color-hairline);
+}
+.hairline-t {
+  border-top: 1px solid var(--color-hairline);
+}
+.hairline-r {
+  border-right: 1px solid var(--color-hairline);
+}
+.hairline-l {
+  border-left: 1px solid var(--color-hairline);
+}
+.hairline-box {
+  border: 1px solid var(--color-hairline);
+}
+
+.hairline-dark-b {
+  border-bottom: 1px solid var(--color-hairline-dark);
+}
+.hairline-dark-t {
+  border-top: 1px solid var(--color-hairline-dark);
+}
+.hairline-dark-box {
+  border: 1px solid var(--color-hairline-dark);
+}
+
+/* Custom cursor hide on hoverable elements when custom cursor is active */
+@media (pointer: fine) {
+  body.has-custom-cursor {
+    cursor: none;
+  }
+  body.has-custom-cursor a,
+  body.has-custom-cursor button,
+  body.has-custom-cursor [role="button"],
+  body.has-custom-cursor input,
+  body.has-custom-cursor select,
+  body.has-custom-cursor textarea {
+    cursor: none;
+  }
+}
+
+/* Custom scrollbar matching paper and ink */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #EAE1D2;
+}
+::-webkit-scrollbar-thumb {
+  background: #A8442A;
+  border-radius: 0;
+}
+
+/* Motion system helper styles */
+.timeline-dot-active {
+  background-color: #C48A1F !important;
+  border-color: #FAF5ED !important;
+  box-shadow: 0 0 14px #C48A1F;
+}
+
+.timeline-dot-active > div {
+  opacity: 1 !important;
+}
+
+.mobile-steam-fallback {
+  background: radial-gradient(circle at 50% 50%, rgba(196, 138, 31, 0.25) 0%, rgba(168, 68, 42, 0.1) 45%, transparent 70%);
+  filter: blur(20px);
+}
+
+.mobile-thali-fallback {
+  background: radial-gradient(circle at 50% 50%, rgba(196, 138, 31, 0.2) 0%, transparent 70%);
+  filter: blur(30px);
+}
+
+.active-step-tab {
+  color: #C48A1F !important;
+  font-weight: 700;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
